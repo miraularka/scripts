@@ -14,11 +14,11 @@ make_bar(){
 }
 
 if [[ -z "${1}" ]]; then
-	drivespace=$(df -l -h | grep $drive | awk '{print $4"/"$2" "}')
-	memory=$(free -m | awk 'NR==2{printf "%.0f%%", $3*100/$2}')
-	cpu=$(printf %.0f $(top -bn2 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" \
-	 | awk 'NR==2{print 100 - $1}'))
-	echo "%{F#ffb52a}  %{F-}${memory}  %{F#ffb52a} %{F-}${cpu}%" \
+	drivespace=$(df -l -h | grep $drive | awk '{printf "%04.4s",$5}')
+	memory=$(free -m | awk 'NR==2{printf "%3.0f%%", $3*100/$2}')
+	cpu=$(top -bn2 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" \
+	 | awk 'NR==2{printf "%3.0f%%", 100-$1}')
+	echo "%{F#ffb52a}  %{F-}${memory}  %{F#ffb52a} %{F-}${cpu}" \
 	" %{F#ffb52a}󱛟 %{F-}${drivespace}"
 else
 	drive_size=$(df -l -h | grep $drive | awk '{print $2}') && drive_size="${drive_size::-1}"
