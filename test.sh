@@ -10,3 +10,6 @@ echo "╭"$bar"╮"
 echo "│"$1"│"
 echo "╰"$bar"╯"
 
+if [[ ${1} == "pause" ]]; then
+	echo "Paused!"
+fi

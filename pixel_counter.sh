@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+#This is for the place website where each pixel requires a charge time to accumulate in order to paint
+
 show_error(){
 	echo "Error>> "$1
 	exit 1

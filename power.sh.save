@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+options () { \
+	choice=$(echo -e "Logout\nShutdown" | dmenu -l 10 -i -p "Power Options: ")
+	[ $? -ne 0 ] && exit ;
+	case $choice in
+		'Logout') i3-msg exit ;;
+		'Shutdown') systemctl poweroff ;;
+		*) ;;
+	esac
+}
+
+options

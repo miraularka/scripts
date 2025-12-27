@@ -9,7 +9,7 @@ if [[ -z "${1}" ]]; then
 	name=$(pactl -f json list sinks | jq -r --arg sink_pretty_name "$selection" '.[] | select(.description == $sink_pretty_name) | .name')
 	if [ -n "$name" ]; then
 		pactl set-default-sink "$name" && notify-send -i /tmp/icon.png -r $msgid "Audio Output Changed:" "$selection"
-		[[ "$name" == *"hdmi"* ]] && icon="󰽟 " || icon=" "
+		case "$name" in *bluez*) icon="󰦢 ";; *hdmi*) icon="󰽟 ";; *) icon=" ";; esac
 		echo "$icon" > ${HOME}/.cache/current_sink_icon
 	else
 		notify-send -i /tmp/icon.png -r $msgid "Audio Output Unchanged" "No changes made"
