@@ -13,11 +13,12 @@ msg(){
 	convert -size 32x32 xc:transparent -fill WHITE -font \
 	${HOME}/.fonts/GohuFont14NerdFont-Regular.ttf -pointsize 32 \
 	 -draw 'gravity center text 0 0 "󱎫"' /tmp/icon.png
-	notify-send -i /tmp/icon.png -t "$2" -r 1339 "$1"
+	dunstify -a system-script -i /tmp/icon.png -r 1339 "Timer Info" "$1" 2>/dev/null || true
+	rm /tmp/icon.png
 }
 
 cancel(){
-	msg "Timer stopped early" 3000
+	msg "Countdown stopped"
 	play --volume 0.4 "$sound_cancel"
 	cleanup
 }
@@ -30,7 +31,7 @@ timer(){
 		sleep 1
 		((seconds--))
 	done
-	msg "Times Up!" 30000
+	msg "Times Up!"
 	play --volume 0.6 "$sound_finish"
 	cleanup
 }

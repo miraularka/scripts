@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 drive='/dev/nvme0n1p2'
 
+msg(){
+	dunstify -a system-script -i "" "Monitored Stats" "$1" 2>/dev/null || true
+}
+
 make_bar(){
-	full=$(($1*40/100))
+	full=$(($1*37/100))
 	for ((i=1;i<=full;i++)); do
 		bar=$bar""
 	done
-	empty=$((40-full))
+	empty=$((37-full))
 	for ((i=1;i<=empty;i++)); do
 		bar=$bar""
 	done
@@ -47,5 +51,5 @@ else
 	[[ mem_free -le 5 ]] && mem_bar=$mem_bar"" || mem_bar=$mem_bar""
 	output=$output"\n"$mem_bar
 
-	notify-send "System Stats" "${output}" -t 30000
+	msg "${output}"
 fi

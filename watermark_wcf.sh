@@ -18,7 +18,7 @@ NOTICE_OK="Watermark applied and copied to clipboard!"
 #--- Functions
 
 notification() {
-	if [[ $(dunstify "$1" -i "$TEMP" -A default,default) == default ]]; then
+	if [[ $(dunstify "Watermarking (WCF)" "$1" -i "$TEMP" -A default,default) == default ]]; then
 		thunar "$DIR"
 	fi
 }

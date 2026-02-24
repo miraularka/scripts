@@ -2,17 +2,18 @@
 
 dir=~/Documents/Notes/
 
-notification () { \
+
+msg() { \
 	convert -size 32x32 xc:transparent -fill WHITE -font ${HOME}/.fonts/GohuFont14NerdFont-Regular.ttf  \
 	-pointsize 32 -draw 'gravity center text 0 0 ""' /tmp/icon.png
-	notify-send -i /tmp/icon.png "$1" "$2"
+	dunstify -a system-script -i /tmp/icon.png -r 1341 "$1" "$2" 2>/dev/null || true
 	rm /tmp/icon.png
 }
 
 newnote () { \
 	name="$(echo "" | dmenu -p "Enter a name (no spaces): " <&-)"
 	touch $dir$name".txt" >/dev/null 2>&1
-	notification "New Note Created:" $name
+	msg "New Note Created:" $name
 	kitty nano $dir$name".txt" >/dev/null 2>&1
 }
 
@@ -21,7 +22,7 @@ delnote () { \
 	| dmenu -l 10 -i -p "Choose a note to delete: ")
 	[ $? -ne 0 ] && exit ;
 	rm $dir$name".txt"
-	notification "Note Deleted:" $name
+	msg "Note Deleted:" $name
 }
 
 selected () { \
